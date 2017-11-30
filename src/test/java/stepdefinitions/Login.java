@@ -16,46 +16,44 @@ import utilities.WaitUtil;
 public class Login {
 	private WebDriver driver;
 	private WebDriverWait wait;
-	private LoginPage loginPage;
-	
+
 	@Given("^User is present on login page$")
-	public void user_is_present_on_login_page() {
+	public void launchUrl() {
 		// Expected page title
 		final String expectedTitle = "Facebook – log in or sign up";
-		
+
 		// instance variables
-		this.driver = DriverUtil.getDriver();
-		this.wait = WaitUtil.getWait();
+		driver = DriverUtil.getDriver();
+		wait = WaitUtil.getWait();
+
+		// launch web url and maximize browser
+		driver.get(PropertyUtil.getPropertyValue("applicationUrl"));
+//		driver.manage().window().maximize();
 		
-		this.driver.get(PropertyUtil.getPropertyValue("applicationUrl"));
+		// read title
 		wait.until(ExpectedConditions.titleIs(expectedTitle));
-		
-		// initialize page factory
-		this.loginPage = PageFactory.initElements(driver, LoginPage.class);
+
+		PageFactory.initElements(driver, LoginPage.class);
 	}
 
-	@When("^User enters username as \"([^\"]*)\"$")
-	public void user_enters_username_as(String email) {
-		WaitUtil.presenceOfElementById(wait, "email");
-		loginPage.enterUserName(email);
+	@When("^User enters username as \"([^\"]*)\" and password as \"([^\"]*)\"$")
+	public void enterUserNameAndPassword(String username, String password) {
+		WaitUtil.presenceOfElement(LoginPage.userName);
+		LoginPage.enterUserName(username);
+		LoginPage.enterPassword(password);
 	}
 
-	@When("^User enters password as \"([^\"]*)\"$")
-	public void user_enters_password_as(String password) {
-//		waitUtil.presenceOfElementById(wait, "pass");
-		loginPage.enterPassword(password);
-	}
-	
 	@When("^User clicks on log in button$")
-	public void user_clicks_on_log_in_button() {
-	   loginPage.clickLogInBtn();
+	public void clickLoginBtn() {
+		WaitUtil.presenceOfElement(LoginPage.logInBtn);
+		LoginPage.clickLogInBtn();
 	}
 
 //	@Then("^User should be logged in$")
 //	public void user_should_be_logged_in() {
 //		// Write code here that turns the phrase above into concrete actions
-//		
-//		WaitUtil.presenceOfElementById(wait, "pageTitle");
+//		// wait till element with id=pageTitle is present;
+//		WaitUtil.presenceOfElement(element);
 //		String title = driver.getTitle();
 //		Assert.assertEquals("Facebook", title);
 //	}

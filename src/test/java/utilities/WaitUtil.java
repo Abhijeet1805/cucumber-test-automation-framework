@@ -1,6 +1,5 @@
 package utilities;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -51,9 +50,16 @@ public class WaitUtil {
 			e.printStackTrace();
 		}
 	}
-
-	public static WebElement presenceOfElementById(WebDriverWait wait, String id) {
-		WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(id)));
-		return element;	
+	
+	public static boolean presenceOfElement(WebElement element) {
+		if(wait.until(ExpectedConditions.visibilityOf(element)) != null) {
+			return true;
+		}
+		return false;
 	}
+
+//	public static WebElement presenceOfElementById(WebDriverWait wait, String id) {
+//		WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(id)));
+//		return element;	
+//	}
 }

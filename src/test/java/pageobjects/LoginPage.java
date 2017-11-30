@@ -2,24 +2,25 @@ package pageobjects;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 
 public class LoginPage {
 	@FindBy(id="email")
-	WebElement userName;
+	public static WebElement userName;
 	@FindBy(id="pass")
-	WebElement password;
-	@FindBy(id="u_0_2")
-	WebElement logInBtn;
+	public static WebElement password;
+	@FindBy(id="loginbutton")
+	public static WebElement logInBtn;
 	
-	public void enterUserName(String email) {
+	public static void enterUserName(String email) {
 		userName.sendKeys(email);
 	}
 	
-	public void enterPassword(String password) {
-		this.password.sendKeys(password);
+	public static void enterPassword(String passwd) {
+		password.sendKeys(passwd);
 	}
 	
-	public void clickLogInBtn() {
-		logInBtn.submit();
+	public static void clickLogInBtn() {
+		logInBtn.click();
 	}
 }
